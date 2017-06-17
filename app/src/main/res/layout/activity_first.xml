@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_first"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:background="@mipmap/bg4"
+        android:orientation="vertical"
+        tools:context="com.example.yo7a.healthwatcher.First"
+        android:weightSum="1">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:srcCompat="@mipmap/logo" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.70" />
+
+    <TextView
+        android:id="@+id/tva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15" />
+
+    <EditText
+        android:id="@+id/edtu1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:background="@drawable/textinputborder"
+        android:ems="10"
+        android:paddingLeft="15dp"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/black" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15" />
+
+    <TextView
+        android:id="@+id/tvw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15" />
+
+    <EditText
+        android:id="@+id/edtp1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.09"
+        android:background="@drawable/textinputborder"
+        android:ems="10"
+        android:paddingLeft="15dp"
+        android:inputType="textPassword"
+        android:textColor="@android:color/black" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.09" />
+
+    <CheckBox
+        android:id="@+id/checkBoxRemember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remember Me"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <Button
+        android:id="@+id/newacc"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:text="Create new Account"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="67dp" />
+
+    <ImageButton
+        android:id="@+id/prime"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@android:color/transparent"
+        app:srcCompat="@mipmap/login" />
+
+
+</LinearLayout>

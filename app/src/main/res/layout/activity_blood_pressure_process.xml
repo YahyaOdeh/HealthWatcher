@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="64dp"
+    android:paddingRight="64dp"
+    android:paddingTop="16dp"
+    android:background="@mipmap/bg4"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.example.yo7a.healthwatcher.BloodPressureProcess">
+
+
+    <SurfaceView
+        android:id="@+id/preview"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+    </SurfaceView>
+
+    <ProgressBar
+        android:id="@+id/BPPB"
+
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:indeterminate="false"
+        android:max="26"
+        android:progress="1"
+        android:progressDrawable="@drawable/circular_progressbar" />
+
+
+</LinearLayout>

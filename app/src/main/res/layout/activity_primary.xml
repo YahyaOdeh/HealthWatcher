@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_primary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.yo7a.healthwatcher.Primary"
+    android:background="@mipmap/bg4"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:weightSum="1">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        app:srcCompat="@mipmap/logo" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <ImageButton
+        android:id="@+id/HR"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@mipmap/hr1" />
+
+    <ImageButton
+        android:id="@+id/RR"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@mipmap/rr1" />
+
+    <ImageButton
+        android:id="@+id/BP"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@mipmap/bp1" />
+
+    <ImageButton
+        android:id="@+id/O2"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@mipmap/or1" />
+
+    <ImageButton
+        android:id="@+id/VS"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@mipmap/avs" />
+
+    <ImageButton
+        android:id="@+id/About"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:scaleType="fitEnd"
+        app:srcCompat="@mipmap/ab" />
+
+
+</LinearLayout>
