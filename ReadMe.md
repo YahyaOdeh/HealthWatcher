@@ -44,7 +44,6 @@ Same as Heart Rate, the difference is a bandpass filter must be applied from 0.1
 
 Ac and Dc signals must be obtained from the PPG signal. Dc signal is the mean values of the Red and Blue intensities for the whole period of time, while the Ac Signal is the Standard Deviation and it can be calculated as follows from here : https://en.wikipedia.org/wiki/Standard_deviation 
 
-----------
 
 
 ِApplication Apk for testing
@@ -53,7 +52,7 @@ Ac and Dc signals must be obtained from the PPG signal. Dc signal is the mean va
 Direct Link to download the Application to test it:
 https://drive.google.com/open?id=0Bxq6lYtmxVbtN0J6QklOdmRuZVU
 
-----------
+
 
 References 
 -------------
@@ -94,6 +93,6 @@ D. G. L. S. D.L.Carnì, "Setting–up of PPG Scaling Factors for SpO2% Evaluatio
 Conference, Benevento, Italy, 2016.  
 
 
-> **Note:** This Project was Made as a Graduation Project at Princess Sumaya university for Technology (Jordan), by Yahya Odeh and Tala Kudmani under Eng. Mohammad Taha supervision.
+> **Note:** This Project was Made as a Graduation Project at Princess Sumaya university for Technology (Jordan), by Yahya Odeh and Talal Kudmani under Eng. Mohammad Taha supervision.
 This Application was shared to be enhanced, so contribution is welcomed to maybe see a reliable Health Vital signs application in the near future..
 
