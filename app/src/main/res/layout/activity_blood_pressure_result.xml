@@ -27,17 +27,13 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:text=""
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
 
     <ImageView
         android:id="@+id/imageView8"

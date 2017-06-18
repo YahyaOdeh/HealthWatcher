@@ -40,10 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
-                android:text=""
+                android:gravity="top"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -53,6 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/hrbar" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -66,8 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:text=""
                 android:textColor="@android:color/black"
@@ -101,8 +105,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:text=""
                 android:textColor="@android:color/black"
@@ -114,6 +118,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ro2" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <ImageView
                 android:id="@+id/imageView11"
@@ -127,8 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:text=""
                 android:textColor="@android:color/black"
@@ -146,7 +154,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="10dp" />
 
     <ImageButton
         android:id="@+id/SendAll"
