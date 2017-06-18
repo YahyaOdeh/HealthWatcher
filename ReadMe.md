@@ -15,8 +15,6 @@ Our main goal from this project was to get good accuracy from the camera of the 
 The Application was tested on Sony Xperia Z2, the application problem that it is hardware dependent so it needs more testing. The Camera or the flash of each mobile can affect the reliability of the application, So the application should be modified to be more universal.
 I used a sqlite local database for users’ privacy purposes, since critical information about the user must be entered to calculate the blood pressure like age, weight, height and gender.
 
-----------
-
 
 How the processes works
 -------------
