@@ -91,6 +91,6 @@ D. G. L. S. D.L.Carnì, "Setting–up of PPG Scaling Factors for SpO2% Evaluatio
 Conference, Benevento, Italy, 2016.  
 
 
-> **Note:** This Project was Made as a Graduation Project at Princess Sumaya university for Technology (Jordan), by Yahya Odeh and Talal Kudmani under Eng. Mohammad Taha supervision.
-This Application was shared to be enhanced, so contribution is welcomed to maybe see a reliable Health Vital signs application in the near future..
+> **Note:** This Project was Made as a Graduation Project at Princess Sumaya university for Technology (Jordan), under Eng. Mohammad Taha supervision.
+This Application is shared to be enhanced and tested more and more, so contribution is welcomed to see a more reliable and scientific Health Vital signs application in the near future..
 
