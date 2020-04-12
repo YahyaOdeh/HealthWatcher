@@ -1,12 +1,11 @@
 package com.example.yo7a.healthwatcher;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Primary extends AppCompatActivity {
 
@@ -18,12 +17,12 @@ public class Primary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_primary);
 
-        ImageButton HeartRate = (ImageButton)this.findViewById(R.id.HR);
-        ImageButton BloodPressure = (ImageButton)this.findViewById(R.id.BP);
-        ImageButton Ox2 = (ImageButton)this.findViewById(R.id.O2);
-        ImageButton RRate = (ImageButton)this.findViewById(R.id.RR);
-        ImageButton VitalSigns = (ImageButton)this.findViewById(R.id.VS);
-        ImageButton Abt = (ImageButton)this.findViewById(R.id.About);
+        ImageButton HeartRate = this.findViewById(R.id.HR);
+        ImageButton BloodPressure = this.findViewById(R.id.BP);
+        ImageButton Ox2 = this.findViewById(R.id.O2);
+        ImageButton RRate = this.findViewById(R.id.RR);
+        ImageButton VitalSigns = this.findViewById(R.id.VS);
+        ImageButton Abt = this.findViewById(R.id.About);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -31,76 +30,58 @@ public class Primary extends AppCompatActivity {
             //The key argument here must match that used in the other activity
         }
 
-        Abt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(),AboutApp.class);
-                startActivity(i);
-                finish();
-            }
+        Abt.setOnClickListener(v -> {
+            Intent i = new Intent(v.getContext(), AboutApp.class);
+            startActivity(i);
+            finish();
         });
 
 
         //Every Test Button sends the username + the test number, to go to the wanted test after the instructions activity
-        HeartRate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p=1;
-                Intent i = new Intent(v.getContext(),StartVitalSigns.class);
-                i.putExtra("Usr", user);
-                i.putExtra("Page", p);
-                startActivity(i);
-                finish();
-            }
+        HeartRate.setOnClickListener(v -> {
+            p = 1;
+            Intent i = new Intent(v.getContext(), StartVitalSigns.class);
+            i.putExtra("Usr", user);
+            i.putExtra("Page", p);
+            startActivity(i);
+            finish();
         });
 
-        BloodPressure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p=2;
-                Intent i = new Intent(v.getContext(),StartVitalSigns.class);
-                i.putExtra("Usr", user);
-                i.putExtra("Page", p);
-                startActivity(i);
-                finish();
-            }
+        BloodPressure.setOnClickListener(v -> {
+            p = 2;
+            Intent i = new Intent(v.getContext(), StartVitalSigns.class);
+            i.putExtra("Usr", user);
+            i.putExtra("Page", p);
+            startActivity(i);
+            finish();
         });
 
-        RRate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p=3;
-                Intent i = new Intent(v.getContext(),StartVitalSigns.class);
-                i.putExtra("Usr", user);
-                i.putExtra("Page", p);
-                startActivity(i);
-                finish();
-            }
+        RRate.setOnClickListener(v -> {
+            p = 3;
+            Intent i = new Intent(v.getContext(), StartVitalSigns.class);
+            i.putExtra("Usr", user);
+            i.putExtra("Page", p);
+            startActivity(i);
+            finish();
         });
 
-        Ox2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p=4;
-                Intent i = new Intent(v.getContext(),StartVitalSigns.class);
-                i.putExtra("Usr", user);
-                i.putExtra("Page", p);
-                startActivity(i);
-                finish();
+        Ox2.setOnClickListener(v -> {
+            p = 4;
+            Intent i = new Intent(v.getContext(), StartVitalSigns.class);
+            i.putExtra("Usr", user);
+            i.putExtra("Page", p);
+            startActivity(i);
+            finish();
 
-            }
         });
 
-        VitalSigns.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p=5;
-                Intent i = new Intent(v.getContext(),StartVitalSigns.class);
-                i.putExtra("Usr", user);
-                i.putExtra("Page", p);
-                startActivity(i);
-                finish();
-            }
+        VitalSigns.setOnClickListener(v -> {
+            p = 5;
+            Intent i = new Intent(v.getContext(), StartVitalSigns.class);
+            i.putExtra("Usr", user);
+            i.putExtra("Page", p);
+            startActivity(i);
+            finish();
         });
 
     }
@@ -111,14 +92,11 @@ public class Primary extends AppCompatActivity {
                 .setTitle("Really Exit?")
                 .setMessage("Are you sure you want to exit?")
                 .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
 
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                        Primary.super.onBackPressed();
-                        finish();
-                        System.exit(0);
-                    }
+                    Primary.super.onBackPressed();
+                    finish();
+                    System.exit(0);
                 }).create().show();
     }
 

@@ -3,6 +3,7 @@
     package="com.example.yo7a.healthwatcher">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.flash" />
 
@@ -16,7 +17,8 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".First"
+        <activity
+            android:name=".First"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -61,21 +63,26 @@
             android:name=".O2Process"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".Login"
+        <activity
+            android:name=".Login"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RespirationProcess"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RespirationProcess"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".StartVitalSigns"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StartVitalSigns"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VitalSignsProcess"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VitalSignsProcess"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VitalSignsResults"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VitalSignsResults"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

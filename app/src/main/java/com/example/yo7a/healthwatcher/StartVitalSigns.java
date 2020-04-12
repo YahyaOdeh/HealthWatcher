@@ -1,10 +1,10 @@
 package com.example.yo7a.healthwatcher;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartVitalSigns extends AppCompatActivity {
     private String user;
@@ -21,47 +21,54 @@ public class StartVitalSigns extends AppCompatActivity {
             p = extras.getInt("Page");
         }
 
-        ImageButton VS = (ImageButton)this.findViewById(R.id.StartVS);
+        ImageButton VS = this.findViewById(R.id.StartVS);
 
-        VS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        VS.setOnClickListener(v -> {
 
-                //switch is to decide which activity must be opened
-                switch(p){
+            //switch is to decide which activity must be opened
+            switch (p) {
 
-                    case 1:  {Intent i = new Intent(v.getContext(),HeartRateProcess.class);
-                        i.putExtra("Usr", user);
-                        startActivity(i);
-                        finish();}
-                        break;
-
-                    case 2:  {Intent i = new Intent(v.getContext(),BloodPressureProcess.class);
-                        i.putExtra("Usr", user);
-                        startActivity(i);
-                        finish();}
-                        break;
-
-                    case 3:  {Intent i = new Intent(v.getContext(),RespirationProcess.class);
-                        i.putExtra("Usr", user);
-                        startActivity(i);
-                        finish();}
-                        break;
-
-                    case 4:  {Intent i = new Intent(v.getContext(),O2Process.class);
-                        i.putExtra("Usr", user);
-                        startActivity(i);
-                        finish();}
-                        break;
-
-                    case 5:  {Intent i = new Intent(v.getContext(),VitalSignsProcess.class);
-                        i.putExtra("Usr", user);
-                        startActivity(i);
-                        finish();}
-                        break;
+                case 1: {
+                    Intent i = new Intent(v.getContext(), HeartRateProcess.class);
+                    i.putExtra("Usr", user);
+                    startActivity(i);
+                    finish();
                 }
+                break;
 
+                case 2: {
+                    Intent i = new Intent(v.getContext(), BloodPressureProcess.class);
+                    i.putExtra("Usr", user);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+
+                case 3: {
+                    Intent i = new Intent(v.getContext(), RespirationProcess.class);
+                    i.putExtra("Usr", user);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+
+                case 4: {
+                    Intent i = new Intent(v.getContext(), O2Process.class);
+                    i.putExtra("Usr", user);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+
+                case 5: {
+                    Intent i = new Intent(v.getContext(), VitalSignsProcess.class);
+                    i.putExtra("Usr", user);
+                    startActivity(i);
+                    finish();
+                }
+                break;
             }
+
         });
     }
 
@@ -71,7 +78,7 @@ public class StartVitalSigns extends AppCompatActivity {
         startActivity(i);
         finish();
         super.onBackPressed();
-            }
-
-
     }
+
+
+}

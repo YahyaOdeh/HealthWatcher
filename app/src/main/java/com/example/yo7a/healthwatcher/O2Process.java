@@ -42,24 +42,24 @@ public class O2Process extends Activity {
 
     //ProgressBar
     private ProgressBar ProgO2;
-    public int ProgP =0;
-    public int inc=0;
+    public int ProgP = 0;
+    public int inc = 0;
 
     //Freq + timer variable
     private static long startTime = 0;
     private double SamplingFreq;
 
     // SPO2 variables
-    private static double RedBlueRatio = 0 ;
-    double Stdr=0;
-    double Stdb=0;
-    double sumred=0;
-    double sumblue=0;
+    private static double RedBlueRatio = 0;
+    double Stdr = 0;
+    double Stdb = 0;
+    double sumred = 0;
+    double sumblue = 0;
     public int o2;
 
     //Arraylist
-    public ArrayList<Double> RedAvgList=new ArrayList<Double>();
-    public ArrayList<Double> BlueAvgList=new ArrayList<Double>();
+    public ArrayList<Double> RedAvgList = new ArrayList<Double>();
+    public ArrayList<Double> BlueAvgList = new ArrayList<Double>();
     public int counter = 0;
 
 
@@ -75,13 +75,13 @@ public class O2Process extends Activity {
         }
 
         // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
+        preview = findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
 
-        ProgO2 = (ProgressBar)findViewById(R.id.O2PB);
+        ProgO2 = findViewById(R.id.O2PB);
         ProgO2.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -131,7 +131,7 @@ public class O2Process extends Activity {
     }
 
     //getting frames data from the camera and start the heartbeat process
-    private  PreviewCallback previewCallback = new PreviewCallback() {
+    private PreviewCallback previewCallback = new PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -152,9 +152,9 @@ public class O2Process extends Activity {
             double RedAvg;
             double BlueAvg;
 
-            RedAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,1); //1 stands for red intensity, 2 for blue, 3 for green
+            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1); //1 stands for red intensity, 2 for blue, 3 for green
             sumred = sumred + RedAvg;
-            BlueAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,2); //1 stands for red intensity, 2 for blue, 3 for green
+            BlueAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 2); //1 stands for red intensity, 2 for blue, 3 for green
             sumblue = sumblue + BlueAvg;
 
             RedAvgList.add(RedAvg);
@@ -164,8 +164,8 @@ public class O2Process extends Activity {
 
             //To check if we got a good red intensity to process if not return to the condition and set it again until we get a good red intensity
             if (RedAvg < 200) {
-                inc=0;
-                ProgP=inc;
+                inc = 0;
+                ProgP = inc;
                 ProgO2.setProgress(ProgP);
                 processing.set(false);
             }
@@ -175,66 +175,68 @@ public class O2Process extends Activity {
             if (totalTimeInSecs >= 30) { //when 30 seconds of measuring passes do the following " we chose 30 seconds to take half sample since 60 seconds is normally a full sample of the heart beat
 
                 startTime = System.currentTimeMillis();
-                SamplingFreq =  (counter/totalTimeInSecs);
+                SamplingFreq = (counter / totalTimeInSecs);
                 Double[] Red = RedAvgList.toArray(new Double[RedAvgList.size()]);
                 Double[] Blue = BlueAvgList.toArray(new Double[BlueAvgList.size()]);
                 double HRFreq = Fft.FFT(Red, counter, SamplingFreq);
-                double bpm=(int)ceil(HRFreq*60);
+                double bpm = (int) ceil(HRFreq * 60);
 
-                double meanr = sumred/counter;
-                double meanb = sumblue/counter;
+                double meanr = sumred / counter;
+                double meanb = sumblue / counter;
 
-                for(int i=0;i<counter-1;i++){
+                for (int i = 0; i < counter - 1; i++) {
 
                     Double bufferb = Blue[i];
 
-                    Stdb = Stdb + ((bufferb - meanb)*(bufferb - meanb));
+                    Stdb = Stdb + ((bufferb - meanb) * (bufferb - meanb));
 
                     Double bufferr = Red[i];
 
-                    Stdr = Stdr + ((bufferr - meanr)*(bufferr - meanr));
+                    Stdr = Stdr + ((bufferr - meanr) * (bufferr - meanr));
 
                 }
 
-                double varr = sqrt(Stdr/(counter-1));
-                double varb = sqrt(Stdb/(counter-1));
+                double varr = sqrt(Stdr / (counter - 1));
+                double varb = sqrt(Stdb / (counter - 1));
 
-                double R = (varr/meanr)/(varb/meanb);
+                double R = (varr / meanr) / (varb / meanb);
 
-                double spo2 = 100-5*(R);
-                o2 =(int) (spo2);
+                double spo2 = 100 - 5 * (R);
+                o2 = (int) (spo2);
 
-                if (( o2 < 80 || o2 > 99) || (bpm < 45 || bpm > 200)) {
-                    inc=0;
-                    ProgP=inc;
+                if ((o2 < 80 || o2 > 99) || (bpm < 45 || bpm > 200)) {
+                    inc = 0;
+                    ProgP = inc;
                     ProgO2.setProgress(ProgP);
                     mainToast = Toast.makeText(getApplicationContext(), "Measurement Failed", Toast.LENGTH_SHORT);
                     mainToast.show();
                     startTime = System.currentTimeMillis();
-                    counter=0;
+                    counter = 0;
                     processing.set(false);
                     return;
                 }
 
             }
 
-            if(o2 != 0 ){
-                Intent i=new Intent(O2Process.this,O2Result.class);
+            if (o2 != 0) {
+                Intent i = new Intent(O2Process.this, O2Result.class);
                 i.putExtra("O2R", o2);
                 i.putExtra("Usr", user);
                 startActivity(i);
-            finish();}
+                finish();
+            }
 
-                if(RedAvg!=0){
-                    ProgP=inc++/34;;
-                    ProgO2.setProgress(ProgP);}
+            if (RedAvg != 0) {
+                ProgP = inc++ / 34;
+                ProgO2.setProgress(ProgP);
+            }
 
-                processing.set(false);
+            processing.set(false);
 
         }
     };
 
-    private  SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
 
         @Override

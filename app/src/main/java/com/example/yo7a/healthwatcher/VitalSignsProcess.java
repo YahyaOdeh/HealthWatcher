@@ -6,11 +6,12 @@ import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.yo7a.healthwatcher.Math.Fft;
 import com.example.yo7a.healthwatcher.Math.Fft2;
@@ -39,38 +40,38 @@ public class VitalSignsProcess extends AppCompatActivity {
 
     //ProgressBar
     private ProgressBar ProgHeart;
-    public int ProgP =0;
-    public int inc=0;
+    public int ProgP = 0;
+    public int inc = 0;
 
     //Beats variable
-    public int Beats=0;
-    public double bufferAvgB=0;
+    public int Beats = 0;
+    public double bufferAvgB = 0;
 
     //Freq + timer variable
     private static long startTime = 0;
     private double SamplingFreq;
 
     //SPO2 variable
-    private static Double [] RedBlueRatio ;
+    private static Double[] RedBlueRatio;
     public int o2;
-    double Stdr=0;
-    double Stdb=0;
-    double sumred=0;
-    double sumblue=0;
+    double Stdr = 0;
+    double Stdb = 0;
+    double sumred = 0;
+    double sumblue = 0;
 
     //RR variable
-    public int Breath=0;
-    public double bufferAvgBr=0;
+    public int Breath = 0;
+    public double bufferAvgBr = 0;
 
     //BloodPressure variables
-    public double Gen,Agg,Hei,Wei;
-    public double Q =4.5;
+    public double Gen, Agg, Hei, Wei;
+    public double Q = 4.5;
     private static int SP = 0, DP = 0;
 
     //Arraylist
-    public ArrayList<Double> GreenAvgList=new ArrayList<Double>();
-    public ArrayList<Double> RedAvgList=new ArrayList<Double>();
-    public ArrayList<Double> BlueAvgList=new ArrayList<Double>();
+    public ArrayList<Double> GreenAvgList = new ArrayList<>();
+    public ArrayList<Double> RedAvgList = new ArrayList<>();
+    public ArrayList<Double> BlueAvgList = new ArrayList<>();
     public int counter = 0;
 
     @Override
@@ -90,8 +91,8 @@ public class VitalSignsProcess extends AppCompatActivity {
         Agg = Integer.parseInt(Data.getage(user));
         Gen = Integer.parseInt(Data.getgender(user));
 
-        if(Gen == 1){
-            Q=5;
+        if (Gen == 1) {
+            Q = 5;
         }
 
         // XML - Java Connecting
@@ -99,7 +100,7 @@ public class VitalSignsProcess extends AppCompatActivity {
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgHeart = (ProgressBar)findViewById(R.id.VSPB);
+        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
         ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -172,12 +173,12 @@ public class VitalSignsProcess extends AppCompatActivity {
             double RedAvg;
             double BlueAvg;
 
-            GreenAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,3); //Getting Green intensity after applying image processing on frame data, 3 stands for green
+            GreenAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 3); //Getting Green intensity after applying image processing on frame data, 3 stands for green
 
-            RedAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,1); //Getting Red intensity after applying image processing on frame data, 1 stands for red
+            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1); //Getting Red intensity after applying image processing on frame data, 1 stands for red
             sumred = sumred + RedAvg; //Summing Red intensity for the whole period of recording which is 30 second
 
-            BlueAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,2); //Getting Blue intensity after applying image processing on frame data, 2 stands for blue
+            BlueAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 2); //Getting Blue intensity after applying image processing on frame data, 2 stands for blue
             sumblue = sumblue + BlueAvg; //Summing Red intensity for the whole period of recording which is 30 second
 
             //Adding rgb intensity values to listofarrays
@@ -190,9 +191,9 @@ public class VitalSignsProcess extends AppCompatActivity {
 
             //To check if we got a good red intensity to process if not return to the condition and set it again until we get a good red intensity
             if (RedAvg < 200) {
-                inc=0;
-                ProgP=inc;
-                counter=0;
+                inc = 0;
+                ProgP = inc;
+                counter = 0;
                 ProgHeart.setProgress(ProgP);
                 processing.set(false);
             }
@@ -207,66 +208,63 @@ public class VitalSignsProcess extends AppCompatActivity {
                 Double[] Red = RedAvgList.toArray(new Double[RedAvgList.size()]);
                 Double[] Blue = BlueAvgList.toArray(new Double[BlueAvgList.size()]);
 
-                SamplingFreq =  (counter/totalTimeInSecs); //calculating sampling frequency
+                SamplingFreq = (counter / totalTimeInSecs); //calculating sampling frequency
 
                 //sending the rg arrays with the counter to make an fft process to get the heartbeats out of it
                 double HRFreq = Fft.FFT(Green, counter, SamplingFreq);
-                double bpm=(int)ceil(HRFreq*60);
+                double bpm = (int) ceil(HRFreq * 60);
                 double HR1Freq = Fft.FFT(Red, counter, SamplingFreq);
-                double bpm1=(int)ceil(HR1Freq*60);
+                double bpm1 = (int) ceil(HR1Freq * 60);
 
                 //sending the rg arrays with the counter to make an fft process then a bandpass filter to get the respiration rate out of it
                 double RRFreq = Fft2.FFT(Green, counter, SamplingFreq);
-                double breath=(int)ceil(RRFreq*60);
+                double breath = (int) ceil(RRFreq * 60);
                 double RR1Freq = Fft2.FFT(Red, counter, SamplingFreq);
-                double breath1=(int)ceil(RR1Freq*60);
+                double breath1 = (int) ceil(RR1Freq * 60);
 
                 //calculating the mean of red and blue intensities on the whole period of recording
-                double meanr = sumred/counter;
-                double meanb = sumblue/counter;
+                double meanr = sumred / counter;
+                double meanb = sumblue / counter;
 
 
                 //calculating the standard  deviation
-                for(int i=0;i<counter-1;i++){
+                for (int i = 0; i < counter - 1; i++) {
 
                     Double bufferb = Blue[i];
 
-                    Stdb = Stdb + ((bufferb - meanb)*(bufferb - meanb));
+                    Stdb = Stdb + ((bufferb - meanb) * (bufferb - meanb));
 
                     Double bufferr = Red[i];
 
-                    Stdr = Stdr + ((bufferr - meanr)*(bufferr - meanr));
+                    Stdr = Stdr + ((bufferr - meanr) * (bufferr - meanr));
 
                 }
 
                 //calculating the variance
-                double varr = sqrt(Stdr/(counter-1));
-                double varb = sqrt(Stdb/(counter-1));
+                double varr = sqrt(Stdr / (counter - 1));
+                double varb = sqrt(Stdb / (counter - 1));
 
                 //calculating ratio between the two means and two variances
-                double R = (varr/meanr)/(varb/meanb);
+                double R = (varr / meanr) / (varb / meanb);
 
                 //estimating SPo2
-                double spo2 = 100-5*(R);
+                double spo2 = 100 - 5 * (R);
 
-                o2 =(int) (spo2);
+                o2 = (int) (spo2);
 
 
                 //comparing if heartbeat and Respiration rate are reasonable from the green and red intensities then take the average, otherwise value from green or red intensity if one of them is good and other is bad.
-                if((bpm > 45 || bpm < 200)|| (breath > 10 || breath < 20))
-                {
-                    if((bpm1 > 45 || bpm1 < 200)|| (breath1 > 10 || breath1 < 24)) {
+                if ((bpm > 45 || bpm < 200) || (breath > 10 || breath < 20)) {
+                    if ((bpm1 > 45 || bpm1 < 200) || (breath1 > 10 || breath1 < 24)) {
 
-                        bufferAvgB = (bpm+bpm1)/2;
-                        bufferAvgBr = (breath+breath1)/2;
+                        bufferAvgB = (bpm + bpm1) / 2;
+                        bufferAvgBr = (breath + breath1) / 2;
 
-                    }
-                    else{
+                    } else {
                         bufferAvgB = bpm;
                         bufferAvgBr = breath;
                     }
-                }
-                else if((bpm1 > 45 || bpm1 < 200)|| (breath1 > 10 || breath1 < 20)){
+                } else if ((bpm1 > 45 || bpm1 < 200) || (breath1 > 10 || breath1 < 20)) {
 
                     bufferAvgB = bpm1;
                     bufferAvgBr = breath1;
@@ -274,36 +272,36 @@ public class VitalSignsProcess extends AppCompatActivity {
                 }
 
                 //if the values of hr and o2 are not reasonable then show a toast that measurement failed and restart the progress bar and the whole recording process for another 30 seconds
-                if ((bufferAvgB < 45 || bufferAvgB > 200)|| (bufferAvgBr < 10 || bufferAvgBr > 24)) {
-                    inc=0;
-                    ProgP=inc;
+                if ((bufferAvgB < 45 || bufferAvgB > 200) || (bufferAvgBr < 10 || bufferAvgBr > 24)) {
+                    inc = 0;
+                    ProgP = inc;
                     ProgHeart.setProgress(ProgP);
                     mainToast = Toast.makeText(getApplicationContext(), "Measurement Failed", Toast.LENGTH_SHORT);
                     mainToast.show();
                     startTime = System.currentTimeMillis();
-                    counter=0;
+                    counter = 0;
                     processing.set(false);
                     return;
                 }
 
-                Beats=(int)bufferAvgB;
-                Breath=(int)bufferAvgBr;
+                Beats = (int) bufferAvgB;
+                Breath = (int) bufferAvgBr;
 
                 //estimations to estimate the blood pressure
                 double ROB = 18.5;
-                double ET = (364.5-1.23*Beats);
-                double BSA = 0.007184*(Math.pow(Wei,0.425))*(Math.pow(Hei,0.725));
-                double SV = (-6.6 + (0.25*(ET-35)) - (0.62*Beats) + (40.4*BSA) - (0.51*Agg));
-                double PP = SV / ((0.013*Wei - 0.007*Agg-0.004*Beats)+1.307);
-                double MPP = Q*ROB;
+                double ET = (364.5 - 1.23 * Beats);
+                double BSA = 0.007184 * (Math.pow(Wei, 0.425)) * (Math.pow(Hei, 0.725));
+                double SV = (-6.6 + (0.25 * (ET - 35)) - (0.62 * Beats) + (40.4 * BSA) - (0.51 * Agg));
+                double PP = SV / ((0.013 * Wei - 0.007 * Agg - 0.004 * Beats) + 1.307);
+                double MPP = Q * ROB;
 
-                SP = (int) (MPP + 3/2*PP);
-                DP = (int) (MPP - PP/3);
+                SP = (int) (MPP + 3 / 2 * PP);
+                DP = (int) (MPP - PP / 3);
             }
 
             //if all those variable contains a valid values then swap them to results activity and finish the processing activity
-            if((Beats != 0) && (SP != 0) && (DP != 0) && (o2 != 0) && (Breath != 0 ) ){
-                Intent i=new Intent(VitalSignsProcess.this,VitalSignsResults.class);
+            if ((Beats != 0) && (SP != 0) && (DP != 0) && (o2 != 0) && (Breath != 0)) {
+                Intent i = new Intent(VitalSignsProcess.this, VitalSignsResults.class);
                 i.putExtra("O2R", o2);
                 i.putExtra("breath", Breath);
                 i.putExtra("bpm", Beats);
@@ -315,14 +313,15 @@ public class VitalSignsProcess extends AppCompatActivity {
             }
 
             //keeps incrementing the progress bar and keeps the loop until we have a valid values for the previous if state
-            if(RedAvg!=0){
-                ProgP=inc++/34;
-                ProgHeart.setProgress(ProgP);}
-                processing.set(false);
+            if (RedAvg != 0) {
+                ProgP = inc++ / 34;
+                ProgHeart.setProgress(ProgP);
+            }
+            processing.set(false);
         }
     };
 
-    private  SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {

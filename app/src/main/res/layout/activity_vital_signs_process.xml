@@ -2,23 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="64dp"
-    android:paddingRight="64dp"
-    android:paddingTop="16dp"
     android:background="@mipmap/bg4"
-    android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.yo7a.healthwatcher.VitalSignsProcess"
-    android:weightSum="1">
+    android:orientation="vertical"
+    android:paddingLeft="64dp"
+    android:paddingTop="16dp"
+    android:paddingRight="64dp"
+    android:paddingBottom="16dp"
+    android:weightSum="1"
+    tools:context="com.example.yo7a.healthwatcher.VitalSignsProcess">
 
 
     <SurfaceView
         android:id="@+id/preview"
         android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-    </SurfaceView>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <ProgressBar
         android:id="@+id/VSPB"
