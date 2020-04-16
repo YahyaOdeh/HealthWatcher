@@ -36,24 +36,24 @@ public class HeartRateProcess extends Activity {
     private Toast mainToast;
 
     //Beats variable
-    public int Beats=0;
-    public double bufferAvgB=0;
+    public int Beats = 0;
+    public double bufferAvgB = 0;
 
     //DataBase
     public String user;
 
     //ProgressBar
     private ProgressBar ProgHeart;
-    public int ProgP =0;
-    public int inc=0;
+    public int ProgP = 0;
+    public int inc = 0;
 
     //Freq + timer variable
     private static long startTime = 0;
     private double SamplingFreq;
 
     //Arraylist
-    public ArrayList<Double> GreenAvgList=new ArrayList<Double>();
-    public ArrayList<Double> RedAvgList=new ArrayList<Double>();
+    public ArrayList<Double> GreenAvgList = new ArrayList<Double>();
+    public ArrayList<Double> RedAvgList = new ArrayList<Double>();
     public int counter = 0;
 
     @Override
@@ -72,7 +72,7 @@ public class HeartRateProcess extends Activity {
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgHeart = (ProgressBar)findViewById(R.id.HRPB);
+        ProgHeart = (ProgressBar) findViewById(R.id.HRPB);
         ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -96,13 +96,9 @@ public class HeartRateProcess extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-
         wakeLock.acquire();
-
         camera = Camera.open();
-
         camera.setDisplayOrientation(90);
-
         startTime = System.currentTimeMillis();
     }
 
@@ -118,11 +114,10 @@ public class HeartRateProcess extends Activity {
         camera.stopPreview();
         camera.release();
         camera = null;
-
     }
 
     //getting frames data from the camera and start the heartbeat process
-    private  PreviewCallback previewCallback = new PreviewCallback() {
+    private PreviewCallback previewCallback = new PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -144,8 +139,8 @@ public class HeartRateProcess extends Activity {
             double GreenAvg;
             double RedAvg;
 
-            GreenAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,3); //1 stands for red intensity, 2 for blue, 3 for green
-            RedAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,1); //1 stands for red intensity, 2 for blue, 3 for green
+            GreenAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 3); //1 stands for red intensity, 2 for blue, 3 for green
+            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1); //1 stands for red intensity, 2 for blue, 3 for green
 
             GreenAvgList.add(GreenAvg);
             RedAvgList.add(RedAvg);
@@ -155,12 +150,12 @@ public class HeartRateProcess extends Activity {
 
             //To check if we got a good red intensity to process if not return to the condition and set it again until we get a good red intensity
             if (RedAvg < 200) {
-                inc=0;
-                ProgP=inc;
-                counter=0;
+                inc = 0;
+                ProgP = inc;
+                counter = 0;
                 ProgHeart.setProgress(ProgP);
                 processing.set(false);
-           }
+            }
 
             long endTime = System.currentTimeMillis();
             double totalTimeInSecs = (endTime - startTime) / 1000d; //to convert time to seconds
@@ -169,65 +164,64 @@ public class HeartRateProcess extends Activity {
                 Double[] Green = GreenAvgList.toArray(new Double[GreenAvgList.size()]);
                 Double[] Red = RedAvgList.toArray(new Double[RedAvgList.size()]);
 
-                SamplingFreq =  (counter/totalTimeInSecs); //calculating the sampling frequency
+                SamplingFreq = (counter / totalTimeInSecs); //calculating the sampling frequency
 
                 double HRFreq = Fft.FFT(Green, counter, SamplingFreq); // send the green array and get its fft then return the amount of heartrate per second
-                double bpm=(int)ceil(HRFreq*60);
+                double bpm = (int) ceil(HRFreq * 60);
                 double HR1Freq = Fft.FFT(Red, counter, SamplingFreq);  // send the red array and get its fft then return the amount of heartrate per second
-                double bpm1=(int)ceil(HR1Freq*60);
+                double bpm1 = (int) ceil(HR1Freq * 60);
 
                 // The following code is to make sure that if the heartrate from red and green intensities are reasonable
                 // take the average between them, otherwise take the green or red if one of them is good
 
-                if((bpm > 45 || bpm < 200) )
-                {
-                    if((bpm1 > 45 || bpm1 < 200)) {
+                if ((bpm > 45 || bpm < 200)) {
+                    if ((bpm1 > 45 || bpm1 < 200)) {
 
-                        bufferAvgB = (bpm+bpm1)/2;
-                    }
-                    else{
+                        bufferAvgB = (bpm + bpm1) / 2;
+                    } else {
                         bufferAvgB = bpm;
                     }
-                }
-                else if((bpm1 > 45 || bpm1 < 200)){
+                } else if ((bpm1 > 45 || bpm1 < 200)) {
                     bufferAvgB = bpm1;
                 }
 
                 if (bufferAvgB < 45 || bufferAvgB > 200) { //if the heart beat wasn't reasonable after all reset the progresspag and restart measuring
-                    inc=0;
-                    ProgP=inc;
+                    inc = 0;
+                    ProgP = inc;
                     ProgHeart.setProgress(ProgP);
                     mainToast = Toast.makeText(getApplicationContext(), "Measurement Failed", Toast.LENGTH_SHORT);
                     mainToast.show();
                     startTime = System.currentTimeMillis();
-                    counter=0;
+                    counter = 0;
                     processing.set(false);
                     return;
                 }
 
-                Beats=(int)bufferAvgB;
+                Beats = (int) bufferAvgB;
             }
 
-            if(Beats != 0 ){ //if beasts were reasonable stop the loop and send HR with the username to results activity and finish this activity
-            Intent i=new Intent(HeartRateProcess.this,HeartRateResult.class);
+            if (Beats != 0) { //if beasts were reasonable stop the loop and send HR with the username to results activity and finish this activity
+                Intent i = new Intent(HeartRateProcess.this, HeartRateResult.class);
                 i.putExtra("bpm", Beats);
                 i.putExtra("Usr", user);
                 startActivity(i);
-                finish();}
+                finish();
+            }
 
 
-                if(RedAvg!=0){ //increment the progresspar
+            if (RedAvg != 0) { //increment the progresspar
 
-                ProgP=inc++/34;
-                ProgHeart.setProgress(ProgP);}
+                ProgP = inc++ / 34;
+                ProgHeart.setProgress(ProgP);
+            }
 
-                //keeps taking frames tell 30 seconds
-                processing.set(false);
+            //keeps taking frames tell 30 seconds
+            processing.set(false);
 
         }
     };
 
-    private  SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
@@ -263,7 +257,6 @@ public class HeartRateProcess extends Activity {
 
     private static Camera.Size getSmallestPreviewSize(int width, int height, Camera.Parameters parameters) {
         Camera.Size result = null;
-
         for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
             if (size.width <= width && size.height <= height) {
                 if (result == null) {
@@ -275,7 +268,6 @@ public class HeartRateProcess extends Activity {
                 }
             }
         }
-
         return result;
     }
 }

@@ -2,11 +2,12 @@ package com.example.yo7a.healthwatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,8 +16,8 @@ import java.util.Date;
 
 public class BloodPressureResult extends AppCompatActivity {
 
-    private String user,Date;
-    int SP,DP;
+    private String user, Date;
+    int SP, DP;
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     Date today = Calendar.getInstance().getTime();
 
@@ -27,14 +28,14 @@ public class BloodPressureResult extends AppCompatActivity {
 
         Date = df.format(today);
         TextView TBP = (TextView) this.findViewById(R.id.BPT);
-        ImageButton SBP = (ImageButton)this.findViewById(R.id.SendBP);
+        ImageButton SBP = (ImageButton) this.findViewById(R.id.SendBP);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             SP = bundle.getInt("SP");
             DP = bundle.getInt("DP");
             user = bundle.getString("Usr");
-            TBP.setText(String.valueOf(SP+" / "+DP));
+            TBP.setText(String.valueOf(SP + " / " + DP));
         }
 
         SBP.setOnClickListener(new View.OnClickListener() {
@@ -42,9 +43,9 @@ public class BloodPressureResult extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"recipient@example.com"});
                 i.putExtra(Intent.EXTRA_SUBJECT, "Health Watcher");
-                i.putExtra(Intent.EXTRA_TEXT   , user+"'s Blood Pressure "+"\n"+" at "+ Date +" is :    "+SP+" / "+DP);
+                i.putExtra(Intent.EXTRA_TEXT, user + "'s Blood Pressure " + "\n" + " at " + Date + " is :    " + SP + " / " + DP);
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
@@ -57,12 +58,10 @@ public class BloodPressureResult extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         Intent i = new Intent(BloodPressureResult.this, Primary.class);
         i.putExtra("Usr", user);
         startActivity(i);
         finish();
         super.onBackPressed();
-
     }
 }

@@ -39,20 +39,20 @@ public class RespirationProcess extends Activity {
 
     //ProgressBar
     private ProgressBar ProgRR;
-    public int ProgP =0;
-    public int inc=0;
+    public int ProgP = 0;
+    public int inc = 0;
 
     //RR variable
-    public int Breath=0;
-    public double bufferAvgBr=0;
+    public int Breath = 0;
+    public double bufferAvgBr = 0;
 
     //Freq + timer variable
     private static long startTime = 0;
     private double SamplingFreq;
 
     //Arraylist
-    public ArrayList<Double> GreenAvgList=new ArrayList<Double>();
-    public ArrayList<Double> RedAvgList=new ArrayList<Double>();
+    public ArrayList<Double> GreenAvgList = new ArrayList<Double>();
+    public ArrayList<Double> RedAvgList = new ArrayList<Double>();
     public int counter = 0;
 
     @Override
@@ -67,11 +67,11 @@ public class RespirationProcess extends Activity {
         }
 
         // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
+        preview = findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgRR = (ProgressBar)findViewById(R.id.HRPB);
+        ProgRR = findViewById(R.id.HRPB);
         ProgRR.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -142,8 +142,8 @@ public class RespirationProcess extends Activity {
             double GreenAvg;
             double RedAvg;
 
-            GreenAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,3); //1 stands for red intensity, 2 for blue, 3 for green
-            RedAvg=ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width,1); //1 stands for red intensity, 2 for blue, 3 for green
+            GreenAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 3); //1 stands for red intensity, 2 for blue, 3 for green
+            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1); //1 stands for red intensity, 2 for blue, 3 for green
 
             GreenAvgList.add(GreenAvg);
             RedAvgList.add(RedAvg);
@@ -152,9 +152,9 @@ public class RespirationProcess extends Activity {
 
             //To check if we got a good red intensity to process if not return to the condition and set it again until we get a good red intensity
             if (RedAvg < 200) {
-                inc=0;
-                ProgP=inc;
-                counter=0;
+                inc = 0;
+                ProgP = inc;
+                counter = 0;
                 ProgRR.setProgress(ProgP);
                 processing.set(false);
             }
@@ -166,63 +166,61 @@ public class RespirationProcess extends Activity {
                 Double[] Green = GreenAvgList.toArray(new Double[GreenAvgList.size()]);
                 Double[] Red = RedAvgList.toArray(new Double[RedAvgList.size()]);
 
-                SamplingFreq =  (counter/totalTimeInSecs);
+                SamplingFreq = (counter / totalTimeInSecs);
                 double RRFreq = Fft2.FFT(Green, counter, SamplingFreq);
-                double bpm=(int)ceil(RRFreq*60);
+                double bpm = (int) ceil(RRFreq * 60);
                 double RR1Freq = Fft2.FFT(Red, counter, SamplingFreq);
-                double breath1=(int)ceil(RR1Freq*60);
+                double breath1 = (int) ceil(RR1Freq * 60);
 
                 // The following code is to make sure that if the respirationrate from red and green intensities are reasonable
                 // take the average between them, otherwise take the green or red if one of them is good
 
-                if((bpm > 10 || bpm < 24) )
-                {
-                    if((breath1 > 10 || breath1 < 24)) {
+                if ((bpm > 10 || bpm < 24)) {
+                    if ((breath1 > 10 || breath1 < 24)) {
 
-                        bufferAvgBr = (bpm+breath1)/2;
+                        bufferAvgBr = (bpm + breath1) / 2;
 
-                    }
-                    else{
+                    } else {
 
                         bufferAvgBr = bpm;
                     }
-                }
-                else if((breath1 > 10 || breath1 < 24)){
+                } else if ((breath1 > 10 || breath1 < 24)) {
 
                     bufferAvgBr = breath1;
                 }
 
                 if (bufferAvgBr < 10 || bufferAvgBr > 24) {
-                    inc=0;
-                    ProgP=inc;
+                    inc = 0;
+                    ProgP = inc;
                     ProgRR.setProgress(ProgP);
                     mainToast = Toast.makeText(getApplicationContext(), "Measurement Failed", Toast.LENGTH_SHORT);
                     mainToast.show();
                     startTime = System.currentTimeMillis();
-                    counter=0;
+                    counter = 0;
                     processing.set(false);
                     return;
                 }
-                Breath=(int)bufferAvgBr;
+                Breath = (int) bufferAvgBr;
             }
 
-            if(Breath != 0 ){
-                Intent i=new Intent(RespirationProcess.this,RespirationResult.class);
+            if (Breath != 0) {
+                Intent i = new Intent(RespirationProcess.this, RespirationResult.class);
                 i.putExtra("bpm", Breath);
                 i.putExtra("Usr", user);
                 startActivity(i);
                 finish();
             }
 
-                if(RedAvg!=0 ){
-                    ProgP=inc++/34;
-                    ProgRR.setProgress(ProgP);}
-                processing.set(false);
+            if (RedAvg != 0) {
+                ProgP = inc++ / 34;
+                ProgRR.setProgress(ProgP);
+            }
+            processing.set(false);
 
         }
     };
 
-    private  SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
 
         @Override

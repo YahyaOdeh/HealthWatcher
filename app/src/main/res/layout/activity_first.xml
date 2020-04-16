@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_first"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:background="@mipmap/bg4"
-        android:orientation="vertical"
-        tools:context="com.example.yo7a.healthwatcher.First"
-        android:weightSum="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_first"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg4"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:weightSum="1"
+    tools:context="com.example.yo7a.healthwatcher.First">
 
 
     <ImageView
@@ -47,14 +47,14 @@
         android:layout_weight="0.08"
         android:background="@drawable/textinputborder"
         android:ems="10"
-        android:paddingLeft="15dp"
         android:inputType="textPersonName"
+        android:paddingLeft="15dp"
         android:textColor="@android:color/black" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15" />
 
     <TextView
         android:id="@+id/tvw"
@@ -77,8 +77,8 @@
         android:layout_weight="0.09"
         android:background="@drawable/textinputborder"
         android:ems="10"
-        android:paddingLeft="15dp"
         android:inputType="textPassword"
+        android:paddingLeft="15dp"
         android:textColor="@android:color/black" />
 
     <Space
