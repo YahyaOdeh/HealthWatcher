@@ -1,14 +1,24 @@
 package com.example.yo7a.healthwatcher;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.util.regex.Pattern;
 
 public class Login extends AppCompatActivity {
 
@@ -25,10 +35,38 @@ public class Login extends AppCompatActivity {
     int c, y = 0;
     int check1 = 0;
 
+    //Camera Permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            }
+        }
+    }
+
+    //Password Pattern
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Checking for camera
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        }
 
         Log = findViewById(R.id.Login);
         ed1 = findViewById(R.id.edth);
@@ -61,33 +99,61 @@ public class Login extends AppCompatActivity {
             emailStr = ed8.getText().toString();
             usrStr = usrStrlow.toLowerCase();
 
-            c = check.checkUser(usrStr); //will check if username exists will return 0 otherwise it will be 1
 
-            if (usrStr.length() < 3 || usrStr.length() > 20) {
-                check1 = 1;
-                mainToast = Toast.makeText(getApplicationContext(), "Username length must be between 3-20 characters", Toast.LENGTH_SHORT);
-                mainToast.show();
+            //Email Validation
+            String emailInput = emailStr;
+            if (emailInput.isEmpty()) {
+                check1=1;
+                ed8.setError("Field can't be empty");
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+                    check1=1;
+                    ed8.setError("Please enter a valid email address");
+                } else {
+                    check1=0;
+                    ed8.setError(null);
+                }
             }
 
+            //Username Validation
+            if (usrStr.isEmpty()) {
+                ed5.setError("Field can't be empty");
+                check1=1;
+            } else if (usrStr.length() > 15) {
+                ed5.setError("Username too long");
+                check1=1;
+            } else {
+                ed5.setError(null);
+                check1=0;
+            }
+            c = check.checkUser(usrStr); //will check if username exists will return 0 otherwise it will be 1
             if (c == y) {
                 check1 = 1;
                 mainToast = Toast.makeText(getApplicationContext(), "Username already exist", Toast.LENGTH_SHORT);
                 mainToast.show();
-
             }
 
+            //Password Validation
+            if (passStr.isEmpty()) {
+                check1=1;
+                ed6.setError("Field can't be empty");
+            } else if (!PASSWORD_PATTERN.matcher(passStr).matches()) {
+                check1=1;
+                ed6.setError("Password too weak: must contain\nUppercase characters (A-Z)\n" +
+                        "Lowercase characters (a-z)\n" +
+                        "Digits (0-9)\n" +
+                        "Special characters (~!@#$%&*_:;'.?/)");
+            } else {
+                check1=0;
+                ed6.setError(null);
+            }
             if (!(passStr.equals(passConStr))) {
                 check1 = 1;
                 mainToast = Toast.makeText(getApplicationContext(), "Password don't match !", Toast.LENGTH_SHORT);
                 mainToast.show();
             }
 
-            if (passStr.length() < 3 || passStr.length() > 20) {
-                check1 = 1;
-                mainToast = Toast.makeText(getApplicationContext(), "Password length must be between 3-20 characters", Toast.LENGTH_SHORT);
-                mainToast.show();
-            }
-
+            //Checking other Inputs
             if (ageStr.isEmpty() || nameStr.isEmpty() || heightStr.isEmpty() || weightStr.isEmpty() || passStr.isEmpty() || passConStr.isEmpty() || emailStr.isEmpty() || usrStr.isEmpty()) {
                 check1 = 1;
                 mainToast = Toast.makeText(getApplicationContext(), "Please fill all your data ", Toast.LENGTH_SHORT);
