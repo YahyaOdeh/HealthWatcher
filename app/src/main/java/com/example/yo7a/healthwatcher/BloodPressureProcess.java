@@ -83,11 +83,11 @@ public class BloodPressureProcess extends Activity {
         }
 
         // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
+        preview = findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgBP = (ProgressBar) findViewById(R.id.BPPB);
+        ProgBP = findViewById(R.id.BPPB);
         ProgBP.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -139,7 +139,7 @@ public class BloodPressureProcess extends Activity {
 
 
     //getting frames data from the camera and start the heartbeat process
-    private PreviewCallback previewCallback = new PreviewCallback() {
+    private final PreviewCallback previewCallback = new PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -248,7 +248,6 @@ public class BloodPressureProcess extends Activity {
 
             if (RedAvg != 0) {
                 ProgP = inc++ / 34;
-                ;
                 ProgBP.setProgress(ProgP);
             }
             processing.set(false);
@@ -256,7 +255,7 @@ public class BloodPressureProcess extends Activity {
         }
     };
 
-    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
 
         @Override

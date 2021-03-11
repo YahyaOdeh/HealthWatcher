@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  *  Copyright (c) 2009 by Vinnie Falco
  *  Copyright (c) 2016 by Bernd Porr
  */
@@ -86,7 +86,7 @@ public class Biquad {
     }
 
     public void setCoefficients(double a0, double a1, double a2,
-                         double b0, double b1, double b2) {
+                                double b0, double b1, double b2) {
         m_a0 = a0;
         m_a1 = a1 / a0;
         m_a2 = a2 / a0;
@@ -106,7 +106,7 @@ public class Biquad {
     }
 
     public void setTwoPole(Complex pole1, Complex zero1,
-                    Complex pole2, Complex zero2) {
+                           Complex pole2, Complex zero2) {
         double a0 = 1;
         double a1;
         double a2;

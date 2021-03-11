@@ -24,7 +24,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.70" />
+        android:layout_weight="0.20" />
 
     <TextView
         android:id="@+id/tva"
@@ -106,7 +106,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="67dp" />
+        android:layout_height="32dp" />
 
     <ImageButton
         android:id="@+id/prime"

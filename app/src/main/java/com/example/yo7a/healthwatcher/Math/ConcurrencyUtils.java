@@ -41,7 +41,7 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * Concurrency utilities.
- * 
+ *
  * @author Piotr Wendykier (piotr.wendykier@gmail.com)
  */
 public class ConcurrencyUtils {
@@ -85,11 +85,11 @@ public class ConcurrencyUtils {
             t.setUncaughtExceptionHandler(handler);
             return t;
         }
-    };
+    }
 
     /**
      * Returns the number of available processors.
-     * 
+     *
      * @return number of available processors
      */
     public static int getNumberOfProcessors() {
@@ -98,7 +98,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the current number of threads.
-     * 
+     *
      * @return the current number of threads.
      */
     public static int getNumberOfThreads() {
@@ -108,7 +108,7 @@ public class ConcurrencyUtils {
     /**
      * Sets the number of threads. If n is not a power-of-two number, then the
      * number of threads is set to the closest power-of-two number less than n.
-     * 
+     *
      * @param n
      */
     public static void setNumberOfThreads(int n) {
@@ -117,7 +117,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the minimal size of 1D data for which two threads are used.
-     * 
+     *
      * @return the minimal size of 1D data for which two threads are used
      */
     public static int getThreadsBeginN_1D_FFT_2Threads() {
@@ -126,7 +126,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the minimal size of 1D data for which four threads are used.
-     * 
+     *
      * @return the minimal size of 1D data for which four threads are used
      */
     public static int getThreadsBeginN_1D_FFT_4Threads() {
@@ -135,7 +135,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the minimal size of 2D data for which threads are used.
-     * 
+     *
      * @return the minimal size of 2D data for which threads are used
      */
     public static int getThreadsBeginN_2D() {
@@ -144,7 +144,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the minimal size of 3D data for which threads are used.
-     * 
+     *
      * @return the minimal size of 3D data for which threads are used
      */
     public static int getThreadsBeginN_3D() {
@@ -153,9 +153,8 @@ public class ConcurrencyUtils {
 
     /**
      * Sets the minimal size of 1D data for which two threads are used.
-     * 
-     * @param n
-     *            the minimal size of 1D data for which two threads are used
+     *
+     * @param n the minimal size of 1D data for which two threads are used
      */
     public static void setThreadsBeginN_1D_FFT_2Threads(int n) {
         if (n < 512) {
@@ -167,9 +166,8 @@ public class ConcurrencyUtils {
 
     /**
      * Sets the minimal size of 1D data for which four threads are used.
-     * 
-     * @param n
-     *            the minimal size of 1D data for which four threads are used
+     *
+     * @param n the minimal size of 1D data for which four threads are used
      */
     public static void setThreadsBeginN_1D_FFT_4Threads(int n) {
         if (n < 512) {
@@ -181,9 +179,8 @@ public class ConcurrencyUtils {
 
     /**
      * Sets the minimal size of 2D data for which threads are used.
-     * 
-     * @param n
-     *            the minimal size of 2D data for which threads are used
+     *
+     * @param n the minimal size of 2D data for which threads are used
      */
     public static void setThreadsBeginN_2D(int n) {
         THREADS_BEGIN_N_2D = n;
@@ -191,9 +188,8 @@ public class ConcurrencyUtils {
 
     /**
      * Sets the minimal size of 3D data for which threads are used.
-     * 
-     * @param n
-     *            the minimal size of 3D data for which threads are used
+     *
+     * @param n the minimal size of 3D data for which threads are used
      */
     public static void setThreadsBeginN_3D(int n) {
         THREADS_BEGIN_N_3D = n;
@@ -218,7 +214,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the closest power-of-two number greater than or equal to x.
-     * 
+     *
      * @param x
      * @return the closest power-of-two number greater than or equal to x
      */
@@ -239,7 +235,7 @@ public class ConcurrencyUtils {
 
     /**
      * Returns the closest power-of-two number less than or equal to x.
-     * 
+     *
      * @param x
      * @return the closest power-of-two number less then or equal to x
      */
@@ -251,7 +247,7 @@ public class ConcurrencyUtils {
 
     /**
      * Checks if x is a power-of-two number.
-     * 
+     *
      * @param x
      * @return true if x is a power-of-two number
      */
@@ -265,7 +261,7 @@ public class ConcurrencyUtils {
     /**
      * Causes the currently executing thread to sleep (temporarily cease
      * execution) for the specified number of milliseconds.
-     * 
+     *
      * @param millis
      */
     public static void sleep(long millis) {
@@ -279,7 +275,7 @@ public class ConcurrencyUtils {
     /**
      * Submits a Runnable task for execution and returns a Future representing
      * that task.
-     * 
+     *
      * @param task a Runnable task for execution
      * @return a Future representing the task
      */
@@ -289,7 +285,7 @@ public class ConcurrencyUtils {
 
     /**
      * Waits for all threads to complete computation.
-     * 
+     *
      * @param futures
      */
     public static void waitForCompletion(Future<?>[] futures) {

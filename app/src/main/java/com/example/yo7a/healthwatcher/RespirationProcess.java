@@ -120,7 +120,7 @@ public class RespirationProcess extends Activity {
     }
 
     //getting frames data from the camera and start the heartbeat process
-    private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+    private final Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -220,7 +220,7 @@ public class RespirationProcess extends Activity {
         }
     };
 
-    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
 
         @Override

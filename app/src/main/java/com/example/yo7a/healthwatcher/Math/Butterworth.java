@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  *  Copyright (c) 2009 by Vinnie Falco
  *  Copyright (c) 2016 by Bernd Porr
  */
@@ -24,245 +24,207 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.complex.ComplexUtils;
 
 /**
- *         User facing class which contains all the methods the user uses
- *         to create Butterworth filters. This done in this way:
- *         Butterworth butterworth = new Butterworth(); 
- *         Then call one of the methods below to create
- *         low-,high-,band-, or stopband filters. For example:
- *         butterworth.bandPass(2,250,50,5);
+ * User facing class which contains all the methods the user uses
+ * to create Butterworth filters. This done in this way:
+ * Butterworth butterworth = new Butterworth();
+ * Then call one of the methods below to create
+ * low-,high-,band-, or stopband filters. For example:
+ * butterworth.bandPass(2,250,50,5);
  */
 public class Butterworth extends Cascade {
 
-	class AnalogLowPass extends LayoutBase {
+    class AnalogLowPass extends LayoutBase {
 
-		private int nPoles;
+        private final int nPoles;
 
-		public AnalogLowPass(int _nPoles) {
-			super(_nPoles);
-			nPoles = _nPoles;
-			setNormal(0, 1);
-		}
+        public AnalogLowPass(int _nPoles) {
+            super(_nPoles);
+            nPoles = _nPoles;
+            setNormal(0, 1);
+        }
 
-		public void design() {
-			reset();
-			double n2 = 2 * nPoles;
-			int pairs = nPoles / 2;
-			for (int i = 0; i < pairs; ++i) {
-				Complex c = ComplexUtils.polar2Complex(1F, Math.PI/2.0
-						+ (2 * i + 1) * Math.PI / n2);
-				addPoleZeroConjugatePairs(c, Complex.INF);
-			}
+        public void design() {
+            reset();
+            double n2 = 2 * nPoles;
+            int pairs = nPoles / 2;
+            for (int i = 0; i < pairs; ++i) {
+                Complex c = ComplexUtils.polar2Complex(1F, Math.PI / 2.0
+                        + (2 * i + 1) * Math.PI / n2);
+                addPoleZeroConjugatePairs(c, Complex.INF);
+            }
 
-			if ((nPoles & 1) == 1)
-				add(new Complex(-1), Complex.INF);
-		}
-	}
+            if ((nPoles & 1) == 1)
+                add(new Complex(-1), Complex.INF);
+        }
+    }
 
-	private void setupLowPass(int order, double sampleRate,
-			double cutoffFrequency, int directFormType) {
+    private void setupLowPass(int order, double sampleRate,
+                              double cutoffFrequency, int directFormType) {
 
-		AnalogLowPass m_analogProto = new AnalogLowPass(order);
-		m_analogProto.design();
+        AnalogLowPass m_analogProto = new AnalogLowPass(order);
+        m_analogProto.design();
 
-		LayoutBase m_digitalProto = new LayoutBase(order);
+        LayoutBase m_digitalProto = new LayoutBase(order);
 
-		new LowPassTransform(cutoffFrequency / sampleRate, m_digitalProto,
-				m_analogProto);
+        new LowPassTransform(cutoffFrequency / sampleRate, m_digitalProto,
+                m_analogProto);
 
-		setLayout(m_digitalProto, directFormType);
-	}
+        setLayout(m_digitalProto, directFormType);
+    }
 
-	/**
-	 * Butterworth Lowpass filter with default topology
-	 * 
-	 * @param order
-	 *            The order of the filter
-	 * @param sampleRate
-	 *            The sampling rate of the system
-	 * @param cutoffFrequency
-	 *            the cutoff frequency
-	 */
-	public void lowPass(int order, double sampleRate, double cutoffFrequency) {
-		setupLowPass(order, sampleRate, cutoffFrequency,
-				DirectFormAbstract.DIRECT_FORM_II);
-	}
+    /**
+     * Butterworth Lowpass filter with default topology
+     *
+     * @param order           The order of the filter
+     * @param sampleRate      The sampling rate of the system
+     * @param cutoffFrequency the cutoff frequency
+     */
+    public void lowPass(int order, double sampleRate, double cutoffFrequency) {
+        setupLowPass(order, sampleRate, cutoffFrequency,
+                DirectFormAbstract.DIRECT_FORM_II);
+    }
 
-	/**
-	 * Butterworth Lowpass filter with custom topology
-	 * 
-	 * @param order
-	 *            The order of the filter
-	 * @param sampleRate
-	 *            The sampling rate of the system
-	 * @param cutoffFrequency
-	 *            The cutoff frequency
-	 * @param directFormType
-	 *            The filter topology. This is either
-	 *            DirectFormAbstract.DIRECT_FORM_I or DIRECT_FORM_II
-	 */
-	public void lowPass(int order, double sampleRate, double cutoffFrequency,
-			int directFormType) {
-		setupLowPass(order, sampleRate, cutoffFrequency, directFormType);
-	}
+    /**
+     * Butterworth Lowpass filter with custom topology
+     *
+     * @param order           The order of the filter
+     * @param sampleRate      The sampling rate of the system
+     * @param cutoffFrequency The cutoff frequency
+     * @param directFormType  The filter topology. This is either
+     *                        DirectFormAbstract.DIRECT_FORM_I or DIRECT_FORM_II
+     */
+    public void lowPass(int order, double sampleRate, double cutoffFrequency,
+                        int directFormType) {
+        setupLowPass(order, sampleRate, cutoffFrequency, directFormType);
+    }
 
-	
-	
-	
-	private void setupHighPass(int order, double sampleRate,
-			double cutoffFrequency, int directFormType) {
 
-		AnalogLowPass m_analogProto = new AnalogLowPass(order);
-		m_analogProto.design();
+    private void setupHighPass(int order, double sampleRate,
+                               double cutoffFrequency, int directFormType) {
 
-		LayoutBase m_digitalProto = new LayoutBase(order);
+        AnalogLowPass m_analogProto = new AnalogLowPass(order);
+        m_analogProto.design();
 
-		new HighPassTransform(cutoffFrequency / sampleRate, m_digitalProto,
-				m_analogProto);
+        LayoutBase m_digitalProto = new LayoutBase(order);
 
-		setLayout(m_digitalProto, directFormType);
-	}
+        new HighPassTransform(cutoffFrequency / sampleRate, m_digitalProto,
+                m_analogProto);
 
-	/**
-	 * Highpass filter with custom topology
-	 * 
-	 * @param order
-	 *            Filter order (ideally only even orders)
-	 * @param sampleRate
-	 *            Sampling rate of the system
-	 * @param cutoffFrequency
-	 *            Cutoff of the system
-	 * @param directFormType
-	 *            The filter topology. See DirectFormAbstract.
-	 */
-	public void highPass(int order, double sampleRate, double cutoffFrequency,
-			int directFormType) {
-		setupHighPass(order, sampleRate, cutoffFrequency, directFormType);
-	}
+        setLayout(m_digitalProto, directFormType);
+    }
 
-	/**
-	 * Highpass filter with default filter topology
-	 * 
-	 * @param order
-	 *            Filter order (ideally only even orders)
-	 * @param sampleRate
-	 *            Sampling rate of the system
-	 * @param cutoffFrequency
-	 *            Cutoff of the system
-	 */
-	public void highPass(int order, double sampleRate, double cutoffFrequency) {
-		setupHighPass(order, sampleRate, cutoffFrequency,
-				DirectFormAbstract.DIRECT_FORM_II);
-	}
+    /**
+     * Highpass filter with custom topology
+     *
+     * @param order           Filter order (ideally only even orders)
+     * @param sampleRate      Sampling rate of the system
+     * @param cutoffFrequency Cutoff of the system
+     * @param directFormType  The filter topology. See DirectFormAbstract.
+     */
+    public void highPass(int order, double sampleRate, double cutoffFrequency,
+                         int directFormType) {
+        setupHighPass(order, sampleRate, cutoffFrequency, directFormType);
+    }
 
-	
-	
-	
-	private void setupBandStop(int order, double sampleRate,
-			double centerFrequency, double widthFrequency, int directFormType) {
+    /**
+     * Highpass filter with default filter topology
+     *
+     * @param order           Filter order (ideally only even orders)
+     * @param sampleRate      Sampling rate of the system
+     * @param cutoffFrequency Cutoff of the system
+     */
+    public void highPass(int order, double sampleRate, double cutoffFrequency) {
+        setupHighPass(order, sampleRate, cutoffFrequency,
+                DirectFormAbstract.DIRECT_FORM_II);
+    }
 
-		AnalogLowPass m_analogProto = new AnalogLowPass(order);
-		m_analogProto.design();
 
-		LayoutBase m_digitalProto = new LayoutBase(order * 2);
+    private void setupBandStop(int order, double sampleRate,
+                               double centerFrequency, double widthFrequency, int directFormType) {
 
-		new BandStopTransform(centerFrequency / sampleRate, widthFrequency
-				/ sampleRate, m_digitalProto, m_analogProto);
+        AnalogLowPass m_analogProto = new AnalogLowPass(order);
+        m_analogProto.design();
 
-		setLayout(m_digitalProto, directFormType);
-	}
+        LayoutBase m_digitalProto = new LayoutBase(order * 2);
 
-	/**
-	 * Bandstop filter with default topology
-	 * 
-	 * @param order
-	 *            Filter order (actual order is twice)
-	 * @param sampleRate
-	 *            Samping rate of the system
-	 * @param centerFrequency
-	 *            Center frequency
-	 * @param widthFrequency
-	 *            Width of the notch
-	 */
-	public void bandStop(int order, double sampleRate, double centerFrequency,
-			double widthFrequency) {
-		setupBandStop(order, sampleRate, centerFrequency, widthFrequency,
-				DirectFormAbstract.DIRECT_FORM_II);
-	}
+        new BandStopTransform(centerFrequency / sampleRate, widthFrequency
+                / sampleRate, m_digitalProto, m_analogProto);
 
-	/**
-	 * Bandstop filter with custom topology
-	 * 
-	 * @param order
-	 *            Filter order (actual order is twice)
-	 * @param sampleRate
-	 *            Samping rate of the system
-	 * @param centerFrequency
-	 *            Center frequency
-	 * @param widthFrequency
-	 *            Width of the notch
-	 * @param directFormType
-	 *            The filter topology
-	 */
-	public void bandStop(int order, double sampleRate, double centerFrequency,
-			double widthFrequency, int directFormType) {
-		setupBandStop(order, sampleRate, centerFrequency, widthFrequency,
-				directFormType);
-	}
+        setLayout(m_digitalProto, directFormType);
+    }
 
-	
-	
-	
-	private void setupBandPass(int order, double sampleRate,
-			double centerFrequency, double widthFrequency, int directFormType) {
+    /**
+     * Bandstop filter with default topology
+     *
+     * @param order           Filter order (actual order is twice)
+     * @param sampleRate      Samping rate of the system
+     * @param centerFrequency Center frequency
+     * @param widthFrequency  Width of the notch
+     */
+    public void bandStop(int order, double sampleRate, double centerFrequency,
+                         double widthFrequency) {
+        setupBandStop(order, sampleRate, centerFrequency, widthFrequency,
+                DirectFormAbstract.DIRECT_FORM_II);
+    }
 
-		AnalogLowPass m_analogProto = new AnalogLowPass(order);
-		m_analogProto.design();
+    /**
+     * Bandstop filter with custom topology
+     *
+     * @param order           Filter order (actual order is twice)
+     * @param sampleRate      Samping rate of the system
+     * @param centerFrequency Center frequency
+     * @param widthFrequency  Width of the notch
+     * @param directFormType  The filter topology
+     */
+    public void bandStop(int order, double sampleRate, double centerFrequency,
+                         double widthFrequency, int directFormType) {
+        setupBandStop(order, sampleRate, centerFrequency, widthFrequency,
+                directFormType);
+    }
 
-		LayoutBase m_digitalProto = new LayoutBase(order * 2);
 
-		new BandPassTransform(centerFrequency / sampleRate, widthFrequency
-				/ sampleRate, m_digitalProto, m_analogProto);
+    private void setupBandPass(int order, double sampleRate,
+                               double centerFrequency, double widthFrequency, int directFormType) {
 
-		setLayout(m_digitalProto, directFormType);
+        AnalogLowPass m_analogProto = new AnalogLowPass(order);
+        m_analogProto.design();
 
-	}
+        LayoutBase m_digitalProto = new LayoutBase(order * 2);
 
-	/**
-	 * Bandpass filter with default topology
-	 * 
-	 * @param order
-	 *            Filter order
-	 * @param sampleRate
-	 *            Sampling rate
-	 * @param centerFrequency
-	 *            Center frequency
-	 * @param widthFrequency
-	 *            Width of the notch
-	 */
-	public void bandPass(int order, double sampleRate, double centerFrequency,
-			double widthFrequency) {
-		setupBandPass(order, sampleRate, centerFrequency, widthFrequency,
-				DirectFormAbstract.DIRECT_FORM_II);
-	}
+        new BandPassTransform(centerFrequency / sampleRate, widthFrequency
+                / sampleRate, m_digitalProto, m_analogProto);
 
-	/**
-	 * Bandpass filter with custom topology
-	 * 
-	 * @param order
-	 *            Filter order
-	 * @param sampleRate
-	 *            Sampling rate
-	 * @param centerFrequency
-	 *            Center frequency
-	 * @param widthFrequency
-	 *            Width of the notch
-	 * @param directFormType
-	 *            The filter topology (see DirectFormAbstract)
-	 */
-	public void bandPass(int order, double sampleRate, double centerFrequency,
-			double widthFrequency, int directFormType) {
-		setupBandPass(order, sampleRate, centerFrequency, widthFrequency,
-				directFormType);
-	}
+        setLayout(m_digitalProto, directFormType);
+
+    }
+
+    /**
+     * Bandpass filter with default topology
+     *
+     * @param order           Filter order
+     * @param sampleRate      Sampling rate
+     * @param centerFrequency Center frequency
+     * @param widthFrequency  Width of the notch
+     */
+    public void bandPass(int order, double sampleRate, double centerFrequency,
+                         double widthFrequency) {
+        setupBandPass(order, sampleRate, centerFrequency, widthFrequency,
+                DirectFormAbstract.DIRECT_FORM_II);
+    }
+
+    /**
+     * Bandpass filter with custom topology
+     *
+     * @param order           Filter order
+     * @param sampleRate      Sampling rate
+     * @param centerFrequency Center frequency
+     * @param widthFrequency  Width of the notch
+     * @param directFormType  The filter topology (see DirectFormAbstract)
+     */
+    public void bandPass(int order, double sampleRate, double centerFrequency,
+                         double widthFrequency, int directFormType) {
+        setupBandPass(order, sampleRate, centerFrequency, widthFrequency,
+                directFormType);
+    }
 
 }

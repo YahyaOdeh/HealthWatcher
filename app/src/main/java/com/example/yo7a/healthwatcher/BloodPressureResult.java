@@ -27,15 +27,15 @@ public class BloodPressureResult extends AppCompatActivity {
         setContentView(R.layout.activity_blood_pressure_result);
 
         Date = df.format(today);
-        TextView TBP = (TextView) this.findViewById(R.id.BPT);
-        ImageButton SBP = (ImageButton) this.findViewById(R.id.SendBP);
+        TextView TBP = this.findViewById(R.id.BPT);
+        ImageButton SBP = this.findViewById(R.id.SendBP);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             SP = bundle.getInt("SP");
             DP = bundle.getInt("DP");
             user = bundle.getString("Usr");
-            TBP.setText(String.valueOf(SP + " / " + DP));
+            TBP.setText(SP + " / " + DP);
         }
 
         SBP.setOnClickListener(new View.OnClickListener() {

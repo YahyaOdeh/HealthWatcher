@@ -26,8 +26,8 @@ public class RespirationResult extends AppCompatActivity {
         setContentView(R.layout.activity_respiration_result);
 
         Date = df.format(today);
-        TextView RRR = (TextView) this.findViewById(R.id.RRR);
-        ImageButton SRR = (ImageButton) this.findViewById(R.id.SendRR);
+        TextView RRR = this.findViewById(R.id.RRR);
+        ImageButton SRR = this.findViewById(R.id.SendRR);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

@@ -50,7 +50,7 @@ public class O2Process extends Activity {
     private double SamplingFreq;
 
     // SPO2 variables
-    private static double RedBlueRatio = 0;
+    private static final double RedBlueRatio = 0;
     double Stdr = 0;
     double Stdb = 0;
     double sumred = 0;
@@ -131,7 +131,7 @@ public class O2Process extends Activity {
     }
 
     //getting frames data from the camera and start the heartbeat process
-    private PreviewCallback previewCallback = new PreviewCallback() {
+    private final PreviewCallback previewCallback = new PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -236,7 +236,7 @@ public class O2Process extends Activity {
         }
     };
 
-    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
 
         @Override

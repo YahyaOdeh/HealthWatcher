@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidStudioApps-HealthWatcher.iml" filepath="$PROJECT_DIR$/AndroidStudioApps-HealthWatcher.iml" group="HealthWatcher" />
-      <module fileurl="file://$PROJECT_DIR$/HealthWatcher.iml" filepath="$PROJECT_DIR$/HealthWatcher.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/HealthWatcher-app.iml" filepath="$PROJECT_DIR$/app/HealthWatcher-app.iml" group="HealthWatcher/app" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HealthWatcher.iml" filepath="$PROJECT_DIR$/.idea/modules/HealthWatcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HealthWatcher.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HealthWatcher.app.iml" />
     </modules>
   </component>
 </project>

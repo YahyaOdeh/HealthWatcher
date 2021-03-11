@@ -68,11 +68,11 @@ public class HeartRateProcess extends Activity {
         }
 
         // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
+        preview = findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgHeart = (ProgressBar) findViewById(R.id.HRPB);
+        ProgHeart = findViewById(R.id.HRPB);
         ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -117,7 +117,7 @@ public class HeartRateProcess extends Activity {
     }
 
     //getting frames data from the camera and start the heartbeat process
-    private PreviewCallback previewCallback = new PreviewCallback() {
+    private final PreviewCallback previewCallback = new PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -221,7 +221,7 @@ public class HeartRateProcess extends Activity {
         }
     };
 
-    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
