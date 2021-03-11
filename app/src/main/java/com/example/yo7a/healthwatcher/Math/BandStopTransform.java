@@ -13,12 +13,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  *  Copyright (c) 2009 by Vinnie Falco
  *  Copyright (c) 2016 by Bernd Porr
  */
 
 package com.example.yo7a.healthwatcher.Math;
+
 import org.apache.commons.math3.complex.Complex;
 
 /**
@@ -27,18 +28,18 @@ import org.apache.commons.math3.complex.Complex;
 public class BandStopTransform {
 
 
-  private double wc;
-  private double wc2;
-  private double a;
-  private double b;
-  private double a2;
-  private double b2;
+    private double wc;
+    private double wc2;
+    private final double a;
+    private final double b;
+    private final double a2;
+    private final double b2;
 
 
-  public BandStopTransform(double fc,
-                      double fw,
-                      LayoutBase digital,
-                      LayoutBase analog) {
+    public BandStopTransform(double fc,
+                             double fw,
+                             LayoutBase digital,
+                             LayoutBase analog) {
         digital.reset();
 
         double ww = 2 * Math.PI * fw;

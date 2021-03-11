@@ -3,7 +3,6 @@ package com.example.yo7a.healthwatcher;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +28,8 @@ public class HeartRateResult extends AppCompatActivity {
         setContentView(R.layout.activity_heart_rate_result);
 
         Date = df.format(today);
-        TextView RHR = (TextView) this.findViewById(R.id.HRR);
-        ImageButton SHR = (ImageButton) this.findViewById(R.id.SendHR);
+        TextView RHR = this.findViewById(R.id.HRR);
+        ImageButton SHR = this.findViewById(R.id.SendHR);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

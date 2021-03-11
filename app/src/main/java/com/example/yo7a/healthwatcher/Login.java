@@ -3,7 +3,6 @@ package com.example.yo7a.healthwatcher;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -64,8 +63,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Checking for camera
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
         }
 
         Log = findViewById(R.id.Login);
@@ -103,14 +102,14 @@ public class Login extends AppCompatActivity {
             //Email Validation
             String emailInput = emailStr;
             if (emailInput.isEmpty()) {
-                check1=1;
+                check1 = 1;
                 ed8.setError("Field can't be empty");
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-                    check1=1;
+                    check1 = 1;
                     ed8.setError("Please enter a valid email address");
                 } else {
-                    check1=0;
+                    check1 = 0;
                     ed8.setError(null);
                 }
             }
@@ -118,13 +117,13 @@ public class Login extends AppCompatActivity {
             //Username Validation
             if (usrStr.isEmpty()) {
                 ed5.setError("Field can't be empty");
-                check1=1;
+                check1 = 1;
             } else if (usrStr.length() > 15) {
                 ed5.setError("Username too long");
-                check1=1;
+                check1 = 1;
             } else {
                 ed5.setError(null);
-                check1=0;
+                check1 = 0;
             }
             c = check.checkUser(usrStr); //will check if username exists will return 0 otherwise it will be 1
             if (c == y) {
@@ -135,16 +134,16 @@ public class Login extends AppCompatActivity {
 
             //Password Validation
             if (passStr.isEmpty()) {
-                check1=1;
+                check1 = 1;
                 ed6.setError("Field can't be empty");
             } else if (!PASSWORD_PATTERN.matcher(passStr).matches()) {
-                check1=1;
+                check1 = 1;
                 ed6.setError("Password too weak: must contain\nUppercase characters (A-Z)\n" +
                         "Lowercase characters (a-z)\n" +
                         "Digits (0-9)\n" +
                         "Special characters (~!@#$%&*_:;'.?/)");
             } else {
-                check1=0;
+                check1 = 0;
                 ed6.setError(null);
             }
             if (!(passStr.equals(passConStr))) {

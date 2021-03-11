@@ -3,6 +3,7 @@ package com.example.yo7a.healthwatcher.Math;
 /**
  * The <code>Vector</code> class provides some useful static functions to
  * compute vectors.
+ *
  * @author Michael Lambertz
  */
 public class Vector {
@@ -20,29 +21,28 @@ public class Vector {
 
     /**
      * Inverts every element of the vector.
+     *
      * @param inVector the vector
      * @return the resulting vctor
      */
     public static double[] invVector(
             double[] inVector) {
-    	
+
         int m = inVector.length;
         double[] outVector = new double[m];
         for (int i = 0; i < m; ++i) {
-        	if( inVector[i] != 0)
-        	{
-        		outVector[i] = 1 / inVector[i];
-        	}
-        	else
-        	{
-        		outVector[i] = 0;
-        	}
+            if (inVector[i] != 0) {
+                outVector[i] = 1 / inVector[i];
+            } else {
+                outVector[i] = 0;
+            }
         }
         return (outVector);
     }
 
     /**
      * Compares the content of two string objects.
+     *
      * @param vec1 the first vector
      * @param vec2 the second vector
      * @return true, if the vectors are equal
@@ -61,12 +61,13 @@ public class Vector {
 
     /**
      * Fills a string with blanks until it reaches a desired length.
-     * @param in string to fill
+     *
+     * @param in  string to fill
      * @param len desired length
      * @return the input string eventually suffixed with blanks
      */
     private static String fillString(String in, int len) {
-        String out = new String(in);
+        String out = in;
         while (out.length() < len) {
             out = " " + out;
         }
@@ -76,6 +77,7 @@ public class Vector {
     /**
      * Converts a vector object into a <code>String</code> object
      * representing its content.
+     *
      * @param vector the vector to be converted to a string
      * @return the string representing the content of the vector
      */
@@ -89,6 +91,7 @@ public class Vector {
 
     /**
      * Builds a new m-dimensional vector object. Its content is undefined.
+     *
      * @param m number of elements
      * @return the new vector
      */
@@ -99,7 +102,8 @@ public class Vector {
     /**
      * Builds a new m-dimensional vector object, whose elements
      * have a predefined value.
-     * @param m number of elements
+     *
+     * @param m   number of elements
      * @param val the element's value
      * @return the new vector
      */
@@ -113,9 +117,10 @@ public class Vector {
 
     /**
      * Scales a vector and returns the result in a new
-     * vector object. 
+     * vector object.
+     *
      * @param vector the vector to scale
-     * @param fac the factor to scale with
+     * @param fac    the factor to scale with
      * @return the scaled vector
      */
     public static double[] scale(double fac, double[] vector) {
@@ -129,6 +134,7 @@ public class Vector {
 
     /**
      * Calculates the scalar product of two vectors.
+     *
      * @param vec1 the first vector
      * @param vec2 the second vector
      * @return the scalar product of the vectors
@@ -144,6 +150,7 @@ public class Vector {
 
     /**
      * Adds two vectors and returns the result in a new vector object.
+     *
      * @param vec1 the first vector
      * @param vec2 the second vector
      * @return the resulting vector
@@ -159,6 +166,7 @@ public class Vector {
 
     /**
      * Subtracts two vectors and returns the result in a new vector object.
+     *
      * @param vec1 the first vector
      * @param vec2 the second vector
      * @return the resulting vector
@@ -174,6 +182,7 @@ public class Vector {
 
     /**
      * Generates a copy of a given vector.
+     *
      * @param vector the vector to copy
      * @return the copied vector
      */
@@ -188,6 +197,7 @@ public class Vector {
 
     /**
      * Generates a random m-dimensional vector object.
+     *
      * @param m the number of elements
      * @return the random vector
      */
@@ -201,6 +211,7 @@ public class Vector {
 
     /**
      * Adds a vector to every vector in a set.
+     *
      * @param vecSet the set of vectors
      * @param addVec the vector to subtract
      * @return the resulting set
@@ -229,8 +240,8 @@ public class Vector {
         mValue /= n;
 
         double[] cVec = new double[n];
-        for(int i = 0; i < n ;i++) {
-            cVec[i] = vec[i]-mValue;
+        for (int i = 0; i < n; i++) {
+            cVec[i] = vec[i] - mValue;
         }
         return cVec;
     }

@@ -96,11 +96,11 @@ public class VitalSignsProcess extends AppCompatActivity {
         }
 
         // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
+        preview = findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
+        ProgHeart = findViewById(R.id.VSPB);
         ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
@@ -149,7 +149,7 @@ public class VitalSignsProcess extends AppCompatActivity {
     }
 
     //getting frames data from the camera and start the measuring process
-    private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+    private final Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
 
         /**
          * {@inheritDoc}
@@ -321,7 +321,7 @@ public class VitalSignsProcess extends AppCompatActivity {
         }
     };
 
-    private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
+    private final SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {

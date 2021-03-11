@@ -3,21 +3,24 @@ package com.example.yo7a.healthwatcher.Math;
 /**
  * The <code>Matrix</code> class provides some useful static functions to
  * compute matrices.
- * Here two-dimensional arrays represent matrices and are taken as 
+ * Here two-dimensional arrays represent matrices and are taken as
  * columns of rows.
+ *
  * @author Michael Lambertz
  */
 public class Matrix {
 
     public static double[][] normalize(double[][] m) {
         double[][] newM = new double[m.length][m[0].length];
-        for(int i = 0 ; i < m.length ; i++) {
+        for (int i = 0; i < m.length; i++) {
             newM[i] = Vector.normalize(m[i]);
         }
         return newM;
     }
+
     /**
      * Square roots every element of the vector.
+     *
      * @param inVector the vector
      * @return the resulting vector
      */
@@ -33,12 +36,13 @@ public class Matrix {
 
     /**
      * Fills a string with blanks until it reaches a desired length.
-     * @param in string to fill
+     *
+     * @param in  string to fill
      * @param len desired length
      * @return the input string eventually suffixed with blanks
      */
     private static String fillString(String in, int len) {
-        String out = new String(in);
+        String out = in;
         while (out.length() < len) {
             out = " " + out;
         }
@@ -48,6 +52,7 @@ public class Matrix {
     /**
      * Converts a matrix object into a <code>String</code> object
      * representing its content.
+     *
      * @param matrix the matrix to be converted to a string
      * @return the string representing the content of the matrix
      */
@@ -66,6 +71,7 @@ public class Matrix {
 
     /**
      * Adds two matrices and returns the result in a new matrix object.
+     *
      * @param mat1 the first matrix
      * @param mat2 the second matrix
      * @return the resulting matrix
@@ -85,6 +91,7 @@ public class Matrix {
 
     /**
      * Subtracts two matrices and returns the result in a new matrix object.
+     *
      * @param mat1 the first matrix
      * @param mat2 the second matrix
      * @return the resulting matrix
@@ -104,6 +111,7 @@ public class Matrix {
 
     /**
      * Multiplicates two matrices and returns the result in a new matrix object.
+     *
      * @param mat1 the first matrix
      * @param mat2 the second matrix
      * @return the resulting matrix
@@ -128,6 +136,7 @@ public class Matrix {
     /**
      * Performs a matrix vector multiplication and returns the result
      * in a new vector object.
+     *
      * @param mat the matrix
      * @param vec the vector
      * @return the resulting vector
@@ -147,7 +156,8 @@ public class Matrix {
 
     /**
      * Scales all elements of the matrix and returns the result
-     * in a new matrix object. 
+     * in a new matrix object.
+     *
      * @param mat the matrix to scale
      * @param fac the factor to scale with
      * @return the scaled matrix
@@ -167,6 +177,7 @@ public class Matrix {
 
     /**
      * Generates a random m*n matrix object.
+     *
      * @param m number of desired rows
      * @param n number of desired columns
      * @return the random matrix
@@ -184,6 +195,7 @@ public class Matrix {
 
     /**
      * Builds a new m*n matrix object. Its content is undefined.
+     *
      * @param m number of desired rows
      * @param n number of desired columns
      * @return the new matrix
@@ -199,8 +211,9 @@ public class Matrix {
     /**
      * Builds a new m*n matrix object, whose elements have a
      * predefined value.
-     * @param m number of desired rows
-     * @param n number of desired columns
+     *
+     * @param m   number of desired rows
+     * @param n   number of desired columns
      * @param val the element's value
      * @return the new matrix
      */
@@ -218,6 +231,7 @@ public class Matrix {
     /**
      * Transposes a matrix and returns the result in a new
      * matrix object.
+     *
      * @param mat the matrix to transpose
      * @return the transposed matrix
      */
@@ -236,6 +250,7 @@ public class Matrix {
 
     /**
      * Generates a copy of a given matrix.
+     *
      * @param mat the matrix to copy
      * @return the copied matrix
      */
@@ -253,7 +268,8 @@ public class Matrix {
     }
 
     /**
-     * Generates an identity n*n matrix. 
+     * Generates an identity n*n matrix.
+     *
      * @param n the number of rows and columns
      * @return the identity matrix
      */
@@ -269,25 +285,27 @@ public class Matrix {
      * Generates a matrix, whose diagonal contains the content
      * of a given vector. The remaining elements of the matrix
      * contain zero.
+     *
      * @param diag the diagonal vector
      * @return the resulting matrix
      */
     public static double[][] diag(double[] diag) {
-    	
+
         int n = diag.length;
         double[][] res = newMatrix(n, n, 0.0);
         for (int i = 0; i < n; ++i) {
             res[i][i] = diag[i];
         }
-        
+
         return (res);
     }
 
     /**
      * Returns the <code>j</code>'th column of a matrix as a
      * new object.
+     *
      * @param mat the matrix
-     * @param j the number of the column
+     * @param j   the number of the column
      * @return a vector containing the column
      */
     public static double[] getVecOfCol(double[][] mat, int j) {
@@ -300,10 +318,11 @@ public class Matrix {
     }
 
     /**
-     * Returns the <code>i</code>'th row of a matrix as a 
+     * Returns the <code>i</code>'th row of a matrix as a
      * new object.
+     *
      * @param mat the matrix
-     * @param i the number of the row
+     * @param i   the number of the row
      * @return a vector containing the row
      */
     public static double[] getVecOfRow(double[][] mat, int i) {
@@ -317,6 +336,7 @@ public class Matrix {
 
     /**
      * Returns the number of columns of a matrix.
+     *
      * @param mat the matrix
      * @return the number of its columns
      */
@@ -326,6 +346,7 @@ public class Matrix {
 
     /**
      * Returns the number of rows of a matrix.
+     *
      * @param mat the matrix
      * @return the number of its rows
      */
@@ -335,6 +356,7 @@ public class Matrix {
 
     /**
      * Calculates the square matrix A * A'.
+     *
      * @param mat the input matrix
      * @return the squared matrix
      */
@@ -358,44 +380,38 @@ public class Matrix {
         }
         return (res);
     }
+
     // only work for 3 x 3 matrix
-    public static double[] invMatrix(double[]mat)
-    {
-    	int n = mat.length;
-    	double [] res = new double [n];
-    	double det = 0.0;
-    	double predet = 0.0;
-    	
-    	predet = mat[0];
-    	for ( int x  = 1; x<3; x++)
-    	{
-    		predet = predet *mat[x];
-    	}
-    	
-    	
-    	res[0] = mat[1]*mat[2];
-    	res[1] = mat[0]*mat[2];
-    	res[2] = mat[1]*mat[0];
-    	
-    	if ( predet != 0)
-    	{
-    		det = 1/predet;
-    		for ( int x = 0 ;x<3;x++)
-    		{
-    			res[x] = det *res[x];
-    		}
-    	}
-    	else
-    	{
-    		for ( int x = 0 ;x<3;x++)
-    		{
-    			res[x] = 0 *res[x];
-    		}
-    	}
-    	
-    	
-    	return(res);
-    	
+    public static double[] invMatrix(double[] mat) {
+        int n = mat.length;
+        double[] res = new double[n];
+        double det = 0.0;
+        double predet = 0.0;
+
+        predet = mat[0];
+        for (int x = 1; x < 3; x++) {
+            predet = predet * mat[x];
+        }
+
+
+        res[0] = mat[1] * mat[2];
+        res[1] = mat[0] * mat[2];
+        res[2] = mat[1] * mat[0];
+
+        if (predet != 0) {
+            det = 1 / predet;
+            for (int x = 0; x < 3; x++) {
+                res[x] = det * res[x];
+            }
+        } else {
+            for (int x = 0; x < 3; x++) {
+                res[x] = 0 * res[x];
+            }
+        }
+
+
+        return (res);
+
     }
 }
 
