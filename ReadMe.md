@@ -48,7 +48,7 @@ Ac and Dc signals must be obtained from the PPG signal. Dc signal is the mean va
 -------------------
 
 Direct Link to download the Application to test it:
-https://drive.google.com/open?id=0Bxq6lYtmxVbtN0J6QklOdmRuZVU
+https://drive.google.com/file/d/0Bxq6lYtmxVbtN0J6QklOdmRuZVU/view?usp=sharing&resourcekey=0-IaT70S-qZJNk_Aj787PwZA
 
 
 
